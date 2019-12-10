@@ -5,7 +5,9 @@
         <i @click="fireModal" class="material-icons close-btn">close</i>
         <form>
           <transition name="fade">
-            <p class="red white-text center-align" v-if="feedback">{{ feedback }}</p>
+            <p class="red white-text center-align" v-if="feedback">
+              {{ feedback }}
+            </p>
           </transition>
           <h5>Add New Student</h5>
           <div class="flex">
@@ -21,10 +23,12 @@
           <p>
             <label>
               <input v-model="checked" type="checkbox" />
-              <span>Is this person a Seinor/Veterin</span>
+              <span>Is this person a Senior/Veteran</span>
             </label>
           </p>
-          <button @click.prevent="addStudent" class="btn add-btn">Add Student</button>
+          <button @click.prevent="addNewStudent" class="btn add-btn">
+            Add Student
+          </button>
         </form>
       </div>
     </div>
@@ -33,7 +37,7 @@
 </template>
 
 <script>
-import db from "../firebase/init";
+import db from "../firebase/init"
 export default {
   name: "NewStudent",
   data() {
@@ -43,44 +47,52 @@ export default {
       firstName: null,
       lastName: null,
       feedback: null
-    };
+    }
   },
   methods: {
     fireModal() {
-      this.showModal = !this.showModal;
+      this.showModal = !this.showModal
     },
-    addStudent() {
-      console.log(`${this.firstName}` + ` ${this.lastName}`);
-
+    addNewStudent() {
       if (this.firstName && this.lastName && this.checked) {
         db.collection("students").add({
           firstName: this.firstName,
           lastName: this.lastName,
           fullName: `${this.firstName}` + ` ${this.lastName}`,
           seniorOrVet: true
-        });
-        this.showModal = false;
-        this.firstName = "";
-        this.lastName = "";
+        })
+        this.$emit("addedFeedback", "New Student Added")
+        this.showModal = false
+        this.firstName = ""
+        this.lastName = ""
+        this.checked = false
       } else if (this.firstName && this.lastName && !this.checked) {
         db.collection("students").add({
           firstName: this.firstName,
           lastName: this.lastName,
           fullName: `${this.firstName}` + ` ${this.lastName}`,
           seniorOrVet: false
-        });
-        this.showModal = false;
-        this.firstName = "";
-        this.lastName = "";
+        })
+        this.$emit("addedFeedback", "Student Added")
+        this.showModal = false
+        this.firstName = ""
+        this.lastName = ""
       } else {
-        this.feedback = "Please enter first and last name";
+        this.feedback = "Please enter first and last name"
       }
     }
   }
-};
+}
 </script>
 
 <style lang="scss">
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}
 .name {
   margin: 1rem;
 }

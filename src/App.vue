@@ -4,13 +4,7 @@
       <a href="#" class="brand-logo">Worland Yoga</a>
       <ul id="nav-mobile" class="right hide-on-med-and-down">
         <li>
-          <a href="sass.html">Sass</a>
-        </li>
-        <li>
-          <a href="badges.html">Components</a>
-        </li>
-        <li>
-          <a href="collapsible.html">JavaScript</a>
+          Settings
         </li>
       </ul>
     </nav>
@@ -27,5 +21,10 @@ nav {
 }
 .margin-bottom {
   margin-bottom: 5rem;
+}
+ul {
+  li {
+    margin-right: 2rem;
+  }
 }
 </style>

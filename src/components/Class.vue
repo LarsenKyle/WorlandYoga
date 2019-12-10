@@ -1,17 +1,28 @@
 <template>
   <div class="class container">
+    <transition name="fade">
+      <p class="green white-text center-align" v-if="msg">{{ msg }}</p>
+    </transition>
     <form>
       <div class="cool valign-wrapper">
         <div class="field title">
           <label for="title">Search Students</label>
           <input type="text" name="title" v-model="title" />
         </div>
-        <NewStudent class="new" />
+        <NewStudent v-on:addedFeedback="updateFeedback($event)" class="new" />
       </div>
 
       <div class="flex">
-        <div class="student" :key="index" v-for="(student, index) in filteredStudents">
-          <div v-if="title.length > 1" @click="addStudent(student.fullName)" class="chip">
+        <div
+          class="student"
+          :key="index"
+          v-for="(student, index) in filteredStudents"
+        >
+          <div
+            v-if="title.length > 1"
+            @click="addStudent(student.fullName)"
+            class="chip"
+          >
             {{ student.fullName }}
             <i class="close material-icons">person_add</i>
           </div>
@@ -25,19 +36,25 @@
         <div :key="index" v-for="(student, index) in attendees" class="attend">
           <div class="chip">
             {{ student }}
-            <i class="close material-icons">close</i>
+            <i @click="removeAttendee(student)" class="close material-icons"
+              >close</i
+            >
           </div>
         </div>
       </div>
-      <EndClass class="fixy" />
+      <EndClass
+        v-bind:students="this.attendees"
+        v-bind:teach="this.$route.params.teacher"
+        class="fixy"
+      />
     </div>
   </div>
 </template>
 
 <script>
-import db from "../firebase/init";
-import EndClass from "./EndClass";
-import NewStudent from "./NewStudent";
+import db from "../firebase/init"
+import EndClass from "./EndClass"
+import NewStudent from "./NewStudent"
 export default {
   name: "Class",
   components: {
@@ -47,47 +64,49 @@ export default {
   data() {
     return {
       title: "",
-      students: [
-        {
-          firstName: "Kyle",
-          lastName: "Larsen",
-          fullName: "Kyle Larsen",
-          checked: false
-        }
-      ],
+      msg: null,
+      students: [],
       checked: [],
       attendees: []
-    };
+    }
   },
   computed: {
     filteredStudents: function() {
       return this.students.filter(student => {
-        return student.fullName.toLowerCase().match(this.title.toLowerCase());
-      });
+        return student.fullName.toLowerCase().match(this.title.toLowerCase())
+      })
     }
   },
   methods: {
     addStudent(name) {
       if (!this.attendees.includes(name)) {
-        this.attendees.push(name);
-        this.title = "";
+        this.attendees.push(name)
       }
-      console.log(this.attendees);
+    },
+    updateFeedback(update) {
+      this.msg = update
+      setTimeout(() => (this.msg = null), 2000)
+    },
+    removeAttendee(name) {
+      this.attendees = this.attendees.filter(attend => {
+        return attend != name
+      })
     }
   },
   created() {
     db.collection("students").onSnapshot(snapshot => {
       snapshot.docChanges().forEach(change => {
         if (change.type == "added") {
-          let doc = change.doc;
+          let doc = change.doc
           this.students.push({
-            fullName: doc.data().fullName
-          });
+            fullName: doc.data().fullName,
+            id: doc.id
+          })
         }
-      });
-    });
+      })
+    })
   }
-};
+}
 </script>
 
 <style>
@@ -100,7 +119,7 @@ export default {
 }
 .cool {
   display: flex;
-  margin-bottom: 3rem;
+  margin-bottom: 1rem;
 }
 .title {
   width: 50%;
