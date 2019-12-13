@@ -1,9 +1,9 @@
-import Vue from "vue"
-import VueRouter from "vue-router"
-import Home from "../views/Home.vue"
-import Settings from "../views/Settings.vue"
-import EachClass from "../views/EachClass.vue"
-Vue.use(VueRouter)
+import Vue from "vue";
+import VueRouter from "vue-router";
+import Home from "../views/Home.vue";
+import Settings from "../views/Settings.vue";
+import EachClass from "../views/EachClass.vue";
+Vue.use(VueRouter);
 
 const routes = [
   {
@@ -30,10 +30,10 @@ const routes = [
     name: "eachClass",
     component: EachClass
   }
-]
+];
 
 const router = new VueRouter({
   routes
-})
+});
 
-export default router
+export default router;

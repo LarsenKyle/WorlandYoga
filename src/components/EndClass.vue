@@ -14,38 +14,40 @@
 </template>
 
 <script>
-import db from "../firebase/init"
+import db from "../firebase/init";
 export default {
   name: "NewStudent",
   data() {
     return {
       showModal: false,
       teacher: null
-    }
+    };
   },
   methods: {
     fireModal() {
-      this.showModal = !this.showModal
+      this.showModal = !this.showModal;
     },
     endClass() {
       db.collection("classes").add({
         teacher: this.teacher.fullName,
         students: this.students,
         timeStamp: Date.now()
-      })
-      this.showModal = !this.showModal
+      });
+      this.$router.push({
+        name: "settings"
+      });
     }
   },
   props: ["teach", "students"],
   created() {
-    let ref = db.collection("teachers").where("slug", "==", this.teach)
+    let ref = db.collection("teachers").where("slug", "==", this.teach);
     ref.get().then(snapshot => {
       snapshot.forEach(doc => {
-        this.teacher = doc.data()
-      })
-    })
+        this.teacher = doc.data();
+      });
+    });
   }
-}
+};
 </script>
 <style lang="scss">
 .yes {

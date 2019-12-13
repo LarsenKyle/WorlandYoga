@@ -26,6 +26,18 @@
               <span>Is this person a Senior/Veteran</span>
             </label>
           </p>
+          <div class="flex">
+            <p>
+              <label>
+                <input v-model="punch" type="checkbox" />
+                <span>Punch Card</span>
+              </label>
+            </p>
+            <p class="punches">How many punches</p>
+            <div class="field name">
+              <input id="sm-box" v-model="punch" type="number" name="title" />
+            </div>
+          </div>
           <button @click.prevent="addNewStudent" class="btn add-btn">
             Add Student
           </button>
@@ -37,7 +49,7 @@
 </template>
 
 <script>
-import db from "../firebase/init"
+import db from "../firebase/init";
 export default {
   name: "NewStudent",
   data() {
@@ -46,12 +58,14 @@ export default {
       checked: false,
       firstName: null,
       lastName: null,
-      feedback: null
-    }
+      feedback: null,
+      punches: null,
+      punch: 0
+    };
   },
   methods: {
     fireModal() {
-      this.showModal = !this.showModal
+      this.showModal = !this.showModal;
     },
     addNewStudent() {
       if (this.firstName && this.lastName && this.checked) {
@@ -59,33 +73,43 @@ export default {
           firstName: this.firstName,
           lastName: this.lastName,
           fullName: `${this.firstName}` + ` ${this.lastName}`,
-          seniorOrVet: true
-        })
-        this.$emit("addedFeedback", "New Student Added")
-        this.showModal = false
-        this.firstName = ""
-        this.lastName = ""
-        this.checked = false
+          seniorOrVet: true,
+          punch: parseInt(this.punch)
+        });
+        this.$emit("addedFeedback", "New Student Added");
+        this.showModal = false;
+        this.firstName = "";
+        this.lastName = "";
+        this.checked = false;
       } else if (this.firstName && this.lastName && !this.checked) {
         db.collection("students").add({
           firstName: this.firstName,
           lastName: this.lastName,
           fullName: `${this.firstName}` + ` ${this.lastName}`,
-          seniorOrVet: false
-        })
-        this.$emit("addedFeedback", "Student Added")
-        this.showModal = false
-        this.firstName = ""
-        this.lastName = ""
+          seniorOrVet: false,
+          punch: parseInt(this.punch)
+        });
+        this.$emit("addedFeedback", "Student Added");
+        this.showModal = false;
+        this.firstName = "";
+        this.lastName = "";
       } else {
-        this.feedback = "Please enter first and last name"
+        this.feedback = "Please enter first and last name";
       }
     }
   }
-}
+};
 </script>
 
 <style lang="scss">
+#sm-box {
+  height: 1.2rem;
+}
+
+.punches {
+  margin-left: 1rem;
+  color: #9e9e9e;
+}
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.5s;

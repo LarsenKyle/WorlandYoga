@@ -23,39 +23,39 @@
 </template>
 
 <script>
-import db from "../firebase/init"
-import moment from "moment"
+import db from "../firebase/init";
+import moment from "moment";
 export default {
   name: "settings",
   data() {
     return {
       theClass: []
-    }
+    };
   },
   created() {
     db.collection("classes").onSnapshot(snapshot => {
       snapshot.docChanges().forEach(change => {
         if (change.type == "added") {
-          let doc = change.doc
+          let doc = change.doc;
           this.theClass.push({
             teacher: doc.data().teacher,
             timestamp: doc.data().timeStamp,
             date: moment(doc.data().timestamp).format("MM/DD YYYY"),
             id: doc.id
-          })
+          });
         }
-      })
-    })
+      });
+    });
   },
   methods: {
     myCheck(stuff) {
       this.$router.push({
         name: "eachClass",
         params: { id: stuff }
-      })
+      });
     }
   }
-}
+};
 </script>
 
 <style lang="scss"></style>

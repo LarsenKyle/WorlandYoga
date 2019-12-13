@@ -1,10 +1,10 @@
 <template>
   <div id="app">
     <nav class="deep-purple accent-4 margin-bottom">
-      <a href="#" class="brand-logo">Worland Yoga</a>
+      <router-link class="main-link" to="/">Worland Yoga</router-link>
       <ul id="nav-mobile" class="right hide-on-med-and-down">
         <li>
-          Settings
+          <router-link to="/settings">Settings</router-link>
         </li>
       </ul>
     </nav>
@@ -18,6 +18,10 @@ nav {
   .brand-logo {
     padding-left: 1rem;
   }
+}
+.main-link {
+  font-size: 2.1rem;
+  margin-left: 1rem;
 }
 .margin-bottom {
   margin-bottom: 5rem;
