@@ -3,6 +3,7 @@ import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import Settings from "../views/Settings.vue";
 import EachClass from "../views/EachClass.vue";
+import allStudents from "../views/allStudents.vue";
 Vue.use(VueRouter);
 
 const routes = [
@@ -29,6 +30,11 @@ const routes = [
     path: "/pastClass/:id",
     name: "eachClass",
     component: EachClass
+  },
+  {
+    path: "/all",
+    name: "allStudents",
+    component: allStudents
   }
 ];
 

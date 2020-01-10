@@ -5,9 +5,7 @@
         <i @click="fireModal" class="material-icons close-btn">close</i>
         <form>
           <transition name="fade">
-            <p class="red white-text center-align" v-if="feedback">
-              {{ feedback }}
-            </p>
+            <p class="red white-text center-align" v-if="feedback">{{ feedback }}</p>
           </transition>
           <h5>Add New Student</h5>
           <div class="flex">
@@ -29,18 +27,16 @@
           <div class="flex">
             <p>
               <label>
-                <input v-model="punch" type="checkbox" />
+                <input v-model="punches" type="checkbox" />
                 <span>Punch Card</span>
               </label>
             </p>
-            <p class="punches">How many punches</p>
-            <div class="field name">
+            <p v-if="punches" class="punches">How many punches</p>
+            <div v-if="punches" class="field name">
               <input id="sm-box" v-model="punch" type="number" name="title" />
             </div>
           </div>
-          <button @click.prevent="addNewStudent" class="btn add-btn">
-            Add Student
-          </button>
+          <button @click.prevent="addNewStudent" class="btn add-btn">Add Student</button>
         </form>
       </div>
     </div>
@@ -59,7 +55,7 @@ export default {
       firstName: null,
       lastName: null,
       feedback: null,
-      punches: null,
+      punches: false,
       punch: 0
     };
   },
@@ -134,9 +130,11 @@ export default {
   background-color: rgba(0, 0, 0, 0.5);
 }
 .modal-content {
+  height: 65%;
+  overflow-y: scroll;
   z-index: 2;
   position: fixed;
-  top: 30%;
+  top: 20%;
   left: 12%;
   background-color: white;
   padding: 20px;
@@ -153,8 +151,6 @@ export default {
   cursor: pointer;
 }
 .add-btn {
-  position: absolute;
-  bottom: 10px;
-  right: 10px;
+  float: right;
 }
 </style>

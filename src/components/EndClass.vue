@@ -1,10 +1,10 @@
 <template>
-  <div class="NewStudent">
+  <div class="EndClass">
     <div v-if="showModal" class="moda">
-      <div class="modal-content">
+      <div id="end" class="modal-content">
         <i @click="fireModal" class="material-icons close-btn">close</i>
         <form class="flex contain">
-          <h5>Are you sure you want to end this class and archive it?</h5>
+          <h5>End this class and archive it?</h5>
           <button @click.prevent="endClass" class="btn yes">Yes!</button>
         </form>
       </div>
@@ -16,7 +16,7 @@
 <script>
 import db from "../firebase/init";
 export default {
-  name: "NewStudent",
+  name: "EndClass",
   data() {
     return {
       showModal: false,
@@ -28,6 +28,15 @@ export default {
       this.showModal = !this.showModal;
     },
     endClass() {
+      this.students.forEach(student => {
+        if (student.punch > 0) {
+          db.collection("students")
+            .doc(student.id)
+            .update({
+              punch: student.punch - 1
+            });
+        }
+      });
       db.collection("classes").add({
         teacher: this.teacher.fullName,
         students: this.students,
@@ -50,6 +59,10 @@ export default {
 };
 </script>
 <style lang="scss">
+#end {
+  height: initial;
+  top: 33%;
+}
 .yes {
   margin-top: 1rem;
   margin-left: auto;

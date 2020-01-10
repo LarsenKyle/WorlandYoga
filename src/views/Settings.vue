@@ -1,6 +1,6 @@
 <template>
   <div class="container" id="settings">
-    <table class="striped responsive-table">
+    <table class="striped">
       <thead>
         <tr>
           <th>Teacher</th>
@@ -9,11 +9,7 @@
       </thead>
 
       <tbody>
-        <tr
-          @click="myCheck(stuff.timestamp)"
-          :key="stuff.id"
-          v-for="stuff in theClass"
-        >
+        <tr @click="myCheck(stuff.timestamp)" :key="stuff.id" v-for="stuff in theClass">
           <td>{{ stuff.teacher }}</td>
           <td>{{ stuff.date }}</td>
         </tr>
@@ -40,7 +36,7 @@ export default {
           this.theClass.push({
             teacher: doc.data().teacher,
             timestamp: doc.data().timeStamp,
-            date: moment(doc.data().timestamp).format("MM/DD YYYY"),
+            date: moment(doc.data().timeStamp).format("lll"),
             id: doc.id
           });
         }

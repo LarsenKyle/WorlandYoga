@@ -16,7 +16,7 @@
         <div class="student" :key="index" v-for="(student, index) in filteredStudents">
           <div
             v-if="title.length > 1"
-            @click="addStudent(student.fullName, student.id)"
+            @click="addStudent(student.fullName, student.id, student.punch, student.seniorOrVet)"
             class="chip"
           >
             {{ student.fullName }}
@@ -56,7 +56,13 @@
           <div class="flex">
             <p>Name: {{ studentData.fullName }}</p>
             <i
-              @click="edInfo(studentData.fullName,studentData.seniorOrVet,studentData.punch)"
+              @click="
+                edInfo(
+                  studentData.fullName,
+                  studentData.seniorOrVet,
+                  studentData.punch
+                )
+              "
               class="material-icons"
             >edit</i>
           </div>
@@ -115,7 +121,8 @@ export default {
       name: "",
       editInfo: false,
       senior: null,
-      punch: null
+      punch: null,
+      annoy: null
     };
   },
   computed: {
@@ -126,15 +133,29 @@ export default {
     }
   },
   methods: {
-    addStudent(name, id, seniorOrVet) {
-      if (!this.attendeeCheck.includes(name)) {
-        this.attendees.push({
-          name: name,
-          id: id,
-          seniorOrVet: seniorOrVet,
-          paid: false
-        });
-        this.attendeeCheck.push(name);
+    addStudent(name, id, punch, seniorOrVet) {
+      if (punch > 0) {
+        if (!this.attendeeCheck.includes(name)) {
+          this.attendees.push({
+            name: name,
+            id: id,
+            seniorOrVet: seniorOrVet,
+            punch: punch,
+            paid: true
+          });
+          this.attendeeCheck.push(name);
+        }
+      } else {
+        if (!this.attendeeCheck.includes(name)) {
+          this.attendees.push({
+            name: name,
+            id: id,
+            seniorOrVet: seniorOrVet,
+            punch: punch,
+            paid: false
+          });
+          this.attendeeCheck.push(name);
+        }
       }
     },
     closeModal() {
@@ -180,33 +201,44 @@ export default {
         .doc(id)
         .update({
           fullName: this.name,
-          seniororVet: this.senior,
-          punch: this.punch
+          seniorOrVet: this.senior,
+          punch: this.punch,
+          id: id
         })
         .then(() => {
           this.showModal = false;
           this.editInfo = false;
-          db.collection("students").onSnapshot(snapshot => {
-            snapshot.docChanges().forEach(change => {
-              if (change.type === "modified") {
-                let doc = change.doc;
-                this.studentdata.push({
-                  fullName: doc.data().fullName,
-                  id: doc.id
-                });
-              }
-            });
-          });
         });
     }
   },
   created() {
     db.collection("students").onSnapshot(snapshot => {
       snapshot.docChanges().forEach(change => {
-        if (change.type == "added" || change.type === "modified") {
+        if (change.type === "modified") {
+          let doc = change.doc;
+          this.attendees.forEach(attend => {
+            if (doc.id === attend.id) {
+              attend.name = doc.data().fullName;
+              attend.seniorOrVet = doc.data().seniorOrVet;
+              attend.punch = doc.data().punch;
+            }
+          });
+          this.filteredStudents.forEach(attend => {
+            if (doc.id === attend.id) {
+              attend.fullName = doc.data().fullName;
+            }
+          });
+        }
+      });
+    });
+    db.collection("students").onSnapshot(snapshot => {
+      snapshot.docChanges().forEach(change => {
+        if (change.type == "added") {
           let doc = change.doc;
           this.students.push({
             fullName: doc.data().fullName,
+            seniorOrVet: doc.data().seniorOrVet,
+            punch: doc.data().punch,
             id: doc.id
           });
         }
@@ -242,14 +274,12 @@ export default {
   margin: 1rem 0rem;
   cursor: pointer;
   .unpaid {
-    border: 1px solid #fff;
     padding: 0.2rem;
     margin-left: 0.1rem;
     font-size: 0.7rem;
     color: red;
   }
   .paid {
-    border: 1px solid #fff;
     padding: 0.2rem;
     margin-left: 0.1rem;
     font-size: 0.7rem;
