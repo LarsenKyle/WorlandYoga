@@ -1,7 +1,7 @@
 <template>
   <div class="allStudents">
     <ul class="container">
-      <li @click="check" :key="student.id" v-for="student in students">{{student.fullName}}</li>
+      <li @click="check" :key="student.id" v-for="student in students">{{student.fullName}} Is Boss</li>
     </ul>
   </div>
 </template>
