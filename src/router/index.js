@@ -3,7 +3,7 @@ import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import Settings from "../views/Settings.vue";
 import EachClass from "../views/EachClass.vue";
-import allStudents from "../views/allStudents.vue";
+import MonthlyReport from "../views/MonthlyReport.vue";
 Vue.use(VueRouter);
 
 const routes = [
@@ -32,14 +32,15 @@ const routes = [
     component: EachClass
   },
   {
-    path: "/all",
-    name: "allStudents",
-    component: allStudents
+    path: "/report",
+    name: "MonthlyReport",
+    component: MonthlyReport
   }
 ];
 
 const router = new VueRouter({
-  routes
+  routes,
+  mode: "history"
 });
 
 export default router;

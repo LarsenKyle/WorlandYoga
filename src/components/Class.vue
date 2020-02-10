@@ -26,7 +26,11 @@
       </div>
     </form>
     <div class="today">
-      <h4>Today's Class</h4>
+      <div class="mk-rows">
+        <h4 v-if="teacher">Today's Class by {{teacher.fullName}}</h4>
+        <i @click="gobk" class="material-icons arrow">keyboard_backspace</i>
+        <p @click="gobk" class="gobk">Go Back</p>
+      </div>
       <div class="divider"></div>
       <div class="flex">
         <div :key="index" v-for="(student, index) in attendees" class="attend">
@@ -122,7 +126,8 @@ export default {
       editInfo: false,
       senior: null,
       punch: null,
-      annoy: null
+      annoy: null,
+      teacher: null
     };
   },
   computed: {
@@ -133,6 +138,9 @@ export default {
     }
   },
   methods: {
+    gobk() {
+      this.$router.push({ path: "/" });
+    },
     addStudent(name, id, punch, seniorOrVet) {
       if (punch > 0) {
         if (!this.attendeeCheck.includes(name)) {
@@ -211,6 +219,16 @@ export default {
         });
     }
   },
+  async mounted() {
+    let ref = await db
+      .collection("teachers")
+      .where("slug", "==", this.$route.params.teacher);
+    await ref.get().then(snapshot => {
+      snapshot.forEach(doc => {
+        this.teacher = doc.data();
+      });
+    });
+  },
   created() {
     db.collection("students").onSnapshot(snapshot => {
       snapshot.docChanges().forEach(change => {
@@ -249,6 +267,20 @@ export default {
 </script>
 
 <style lang="scss">
+.gobk {
+  font-size: 1.2rem;
+  padding-top: 0.9rem;
+  cursor: pointer;
+}
+.mk-rows {
+  display: flex;
+}
+.arrow {
+  font-size: 2.6rem;
+  padding-top: 1.7rem;
+  padding-left: 1rem;
+  cursor: pointer;
+}
 .moda {
   .edit {
     width: 33%;
