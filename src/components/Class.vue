@@ -13,11 +13,7 @@
       </div>
 
       <div class="flex">
-        <div
-          class="student"
-          :key="index"
-          v-for="(student, index) in filteredStudents"
-        >
+        <div class="student" :key="index" v-for="(student, index) in filteredStudents">
           <div
             v-if="title.length > 1"
             @click="
@@ -47,20 +43,9 @@
         <div :key="index" v-for="(student, index) in attendees" class="attend">
           <div class="chip">
             <span @click="showData(student.id)">{{ student.name }}</span>
-            <span
-              @click="isPaid(student.id)"
-              v-if="!student.paid"
-              class="unpaid"
-              >Unpaid</span
-            >
-            <span @click="isPaid(student.id)" v-if="student.paid" class="paid"
-              >Paid</span
-            >
-            <i
-              @click="removeAttendee(student.name)"
-              class="close material-icons"
-              >close</i
-            >
+            <span @click="isPaid(student.id)" v-if="!student.paid" class="unpaid">Unpaid</span>
+            <span @click="isPaid(student.id)" v-if="student.paid" class="paid">Paid</span>
+            <i @click="removeAttendee(student.name)" class="close material-icons">close</i>
           </div>
         </div>
       </div>
@@ -79,8 +64,8 @@
       <div class="modal-content edit">
         <i @click="closeModal" class="material-icons close-btn">close</i>
         <div v-if="!editInfo">
-          <div class="flex">
-            <p>Name: {{ studentData.fullName }}</p>
+          <div class="flex top">
+            <p>Name: &nbsp; {{ studentData.fullName }}</p>
             <i
               @click="
                 edInfo(
@@ -90,15 +75,14 @@
                 )
               "
               class="material-icons"
-              >edit</i
-            >
+            >edit</i>
           </div>
           <div class="flex">
-            <p>Senir/Vet: {{ studentData.seniorOrVet }}</p>
+            <p>Senir/Vet: &nbsp; {{ studentData.seniorOrVet }}</p>
             <i class="material-icons">edit</i>
           </div>
           <div class="flex">
-            <p>Punches: {{ studentData.punch }}</p>
+            <p>Punches: &nbsp;&nbsp;&nbsp; {{ studentData.punch }}</p>
             <i class="material-icons">edit</i>
           </div>
         </div>
@@ -117,9 +101,7 @@
           <div class="field name">
             <input id="sm-box" v-model="punch" type="number" name="title" />
           </div>
-          <div @click="updateInfo(studentData.id)" class="btn">
-            Save Changes
-          </div>
+          <div @click="updateInfo(studentData.id)" class="btn">Save Changes</div>
         </div>
       </div>
     </div>
@@ -292,9 +274,27 @@ export default {
 </script>
 
 <style lang="scss">
+@media only screen and (max-width: 700px) {
+  .today {
+    margin-top: 3rem;
+  }
+  .class {
+    .moda {
+      .edit {
+        width: 80%;
+        left: 10%;
+        top: 10%;
+        height: 40%;
+      }
+    }
+  }
+}
+h4 {
+  font-size: 1.8rem;
+}
 .gobk {
   font-size: 1.2rem;
-  padding-top: 0.9rem;
+  padding-top: 0.6rem;
   cursor: pointer;
 }
 .mk-rows {
@@ -302,17 +302,24 @@ export default {
 }
 .arrow {
   font-size: 2.6rem;
-  padding-top: 1.7rem;
+  padding-top: 1.4rem;
   padding-left: 1rem;
   cursor: pointer;
 }
 .moda {
   .edit {
-    width: 33%;
+    width: 30%;
     margin: 0 auto;
     left: 33%;
+    height: 60%;
+
     .flex {
       align-items: center;
+      width: 50%;
+      margin: 0 auto;
+      &.top {
+        margin-top: 4rem;
+      }
       i {
         margin-left: 1rem;
       }
@@ -329,6 +336,8 @@ export default {
 .chip {
   width: 100%;
   margin: 1rem 0rem;
+  background-color: #89b4ad;
+  color: white;
   cursor: pointer;
   .unpaid {
     padding: 0.2rem;

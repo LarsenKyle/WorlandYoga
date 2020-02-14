@@ -5,17 +5,18 @@
         <label class="teacher" for="teacher">Who's teaching this class?</label>
         <select @change="getSlug" v-model="teach" name="teacher">
           <option disabled value>Please select one</option>
-          <option :key="index" v-for="(teacher, index) in teachers">{{
+          <option :key="index" v-for="(teacher, index) in teachers">
+            {{
             teacher.fullName
-          }}</option>
+            }}
+          </option>
         </select>
       </div>
       <router-link
         :disabled="teach == ''"
         class="btn float-right"
         :to="{ name: 'home', params: { teacher: slug } }"
-        >Start Class</router-link
-      >
+      >Start Class</router-link>
     </form>
     <AddTeacher />
   </div>
@@ -65,6 +66,7 @@ export default {
   float: right;
 }
 .about {
+  margin-top: 8rem;
   select {
     margin-bottom: 1.5rem;
     width: 50%;
@@ -76,7 +78,7 @@ form {
   .feild {
     .teacher {
       font-size: 2rem;
-      color: black;
+      color: #856721;
     }
   }
 }
