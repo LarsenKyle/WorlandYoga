@@ -4,7 +4,10 @@
       <router-link class="main-link" to="/">Worland Yoga</router-link>
       <ul id="nav-mobile" class="right hide-on-med-and-down">
         <li>
-          <router-link to="/settings">Settings</router-link>
+          <router-link to="/settings">Past Classes</router-link>
+        </li>
+        <li>
+          <router-link to="/report">Monthly Reports</router-link>
         </li>
       </ul>
     </nav>

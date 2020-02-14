@@ -821,7 +821,6 @@ export default {
   }
   #fixIt {
     position: static;
-    background-color: lightblue;
   }
   .selector {
     flex-direction: column;
