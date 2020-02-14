@@ -13,10 +13,21 @@
       </div>
 
       <div class="flex">
-        <div class="student" :key="index" v-for="(student, index) in filteredStudents">
+        <div
+          class="student"
+          :key="index"
+          v-for="(student, index) in filteredStudents"
+        >
           <div
             v-if="title.length > 1"
-            @click="addStudent(student.fullName, student.id, student.punch, student.seniorOrVet)"
+            @click="
+              addStudent(
+                student.fullName,
+                student.id,
+                student.punch,
+                student.seniorOrVet
+              )
+            "
             class="chip"
           >
             {{ student.fullName }}
@@ -27,7 +38,7 @@
     </form>
     <div class="today">
       <div class="mk-rows">
-        <h4 v-if="teacher">Today's Class by {{teacher.fullName}}</h4>
+        <h4 v-if="teacher">Today's Class by {{ teacher.fullName }}</h4>
         <i @click="gobk" class="material-icons arrow">keyboard_backspace</i>
         <p @click="gobk" class="gobk">Go Back</p>
       </div>
@@ -36,9 +47,20 @@
         <div :key="index" v-for="(student, index) in attendees" class="attend">
           <div class="chip">
             <span @click="showData(student.id)">{{ student.name }}</span>
-            <span @click="isPaid(student.id)" v-if="!student.paid" class="unpaid">Unpaid</span>
-            <span @click="isPaid(student.id)" v-if="student.paid" class="paid">Paid</span>
-            <i @click="removeAttendee(student.name)" class="close material-icons">close</i>
+            <span
+              @click="isPaid(student.id)"
+              v-if="!student.paid"
+              class="unpaid"
+              >Unpaid</span
+            >
+            <span @click="isPaid(student.id)" v-if="student.paid" class="paid"
+              >Paid</span
+            >
+            <i
+              @click="removeAttendee(student.name)"
+              class="close material-icons"
+              >close</i
+            >
           </div>
         </div>
       </div>
@@ -68,7 +90,8 @@
                 )
               "
               class="material-icons"
-            >edit</i>
+              >edit</i
+            >
           </div>
           <div class="flex">
             <p>Senir/Vet: {{ studentData.seniorOrVet }}</p>
@@ -94,7 +117,9 @@
           <div class="field name">
             <input id="sm-box" v-model="punch" type="number" name="title" />
           </div>
-          <div @click="updateInfo(studentData.id)" class="btn">Save Changes</div>
+          <div @click="updateInfo(studentData.id)" class="btn">
+            Save Changes
+          </div>
         </div>
       </div>
     </div>

@@ -9,7 +9,11 @@
       </thead>
 
       <tbody>
-        <tr @click="myCheck(stuff.timestamp)" :key="stuff.id" v-for="stuff in theClass">
+        <tr
+          @click="myCheck(stuff.timestamp)"
+          :key="stuff.id"
+          v-for="stuff in theClass"
+        >
           <td>{{ stuff.teacher }}</td>
           <td>{{ stuff.date }}</td>
         </tr>

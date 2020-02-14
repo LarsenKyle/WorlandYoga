@@ -16,7 +16,11 @@
             </tr>
           </thead>
           <tbody>
-            <tr :key="student.id" v-for="student in students" @click="showData(student.id)">
+            <tr
+              :key="student.id"
+              v-for="student in students"
+              @click="showData(student.id)"
+            >
               <td>{{ student.name }}</td>
               <td v-if="student.paid">
                 <i class="material-icons green-text">done</i>
@@ -55,7 +59,8 @@
                 )
               "
               class="material-icons"
-            >edit</i>
+              >edit</i
+            >
           </div>
           <div class="flex">
             <p>Senior/Vet: {{ studentData.seniorOrVet }}</p>
@@ -81,7 +86,9 @@
           <div class="field name">
             <input id="sm-box" v-model="punch" type="number" name="title" />
           </div>
-          <div @click="updateInfo(studentData.id)" class="btn">Save Changes</div>
+          <div @click="updateInfo(studentData.id)" class="btn">
+            Save Changes
+          </div>
         </div>
       </div>
     </div>

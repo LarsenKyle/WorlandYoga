@@ -5,7 +5,9 @@
         <i @click="fireModal" class="material-icons close-btn">close</i>
         <form>
           <transition name="fade">
-            <p class="red white-text center-align" v-if="feedback">{{ feedback }}</p>
+            <p class="red white-text center-align" v-if="feedback">
+              {{ feedback }}
+            </p>
           </transition>
           <h5>Add New Student</h5>
           <div class="flex">
@@ -36,7 +38,9 @@
               <input id="sm-box" v-model="punch" type="number" name="title" />
             </div>
           </div>
-          <button @click.prevent="addNewStudent" class="btn add-btn">Add Student</button>
+          <button @click.prevent="addNewStudent" class="btn add-btn">
+            Add Student
+          </button>
         </form>
       </div>
     </div>
