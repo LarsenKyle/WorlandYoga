@@ -819,15 +819,28 @@ export default {
       margin: 0 auto;
     }
   }
+  .container {
+    #type {
+      display: initial;
+      width: 60%;
+      border: 1px solid rgb(124, 122, 122);
+    }
+  }
   #fixIt {
     position: static;
+    display: grid;
+    grid-template-columns: auto auto;
+    .months {
+      width: 50%;
+      font-size: 1.2rem;
+    }
   }
   .selector {
     flex-direction: column;
   }
 }
 .line {
-  background-color: black;
+  background-color: #856721;
   height: 1px;
   width: 110%;
 }
@@ -869,7 +882,7 @@ export default {
   font-size: 1.6rem;
 }
 .active {
-  color: red;
+  color: #856721;
 }
 .modal-mask {
   position: fixed;

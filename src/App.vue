@@ -25,18 +25,29 @@ html {
   background-image: url("./assets/forest.svg");
   background-size: cover;
   background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: top;
   width: 100%;
   height: 100%;
   color: #856721;
 }
 @media only screen and (max-width: 700px) {
+  html {
+    background-image: url("./assets/mobilefor.svg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: top;
+    width: 100%;
+    height: 100%;
+  }
   #main-link {
-    font-size: 1.4rem;
-    margin-right: 1.5rem;
+    font-size: 1.2rem;
+    margin-right: 0.5rem;
   }
   .main-link {
     &.link-mobile {
-      font-size: 1rem;
+      font-size: 0.9rem;
       display: initial;
     }
   }

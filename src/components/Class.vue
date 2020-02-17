@@ -65,7 +65,7 @@
         <i @click="closeModal" class="material-icons close-btn">close</i>
         <div v-if="!editInfo">
           <div class="flex top">
-            <p>Name: &nbsp; {{ studentData.fullName }}</p>
+            <p>Name: {{ studentData.fullName }}</p>
             <i
               @click="
                 edInfo(
@@ -78,11 +78,11 @@
             >edit</i>
           </div>
           <div class="flex">
-            <p>Senir/Vet: &nbsp; {{ studentData.seniorOrVet }}</p>
+            <p>Senir/Vet: {{ studentData.seniorOrVet }}</p>
             <i class="material-icons">edit</i>
           </div>
           <div class="flex">
-            <p>Punches: &nbsp;&nbsp;&nbsp; {{ studentData.punch }}</p>
+            <p>Punches: {{ studentData.punch }}</p>
             <i class="material-icons">edit</i>
           </div>
         </div>
